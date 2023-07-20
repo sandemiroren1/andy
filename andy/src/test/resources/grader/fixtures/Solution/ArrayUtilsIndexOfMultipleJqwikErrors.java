@@ -51,6 +51,18 @@ class ArrayUtilsMultipleTests {
         assertEquals(index, ArrayUtils.indexOf(arr, numbers.get(index), start));
     }
 
+    //test when the element specified is certainly not in the array using assumptions
+    @Property
+    void testNoElementInWholeArrayWithAssumption(
+            @ForAll @Size(value=10) List<@IntRange(min = -2147483600, max = 2147483600) Integer> numbers,
+            @ForAll int valueToFind) {
+
+        Assume.that(valueToFind > 2147483600 || valueToFind < -2147483600);
+
+        int[] arr = convertListToArray(numbers);
+        assertEquals(-1, ArrayUtils.indexOf(arr, valueToFind, 0));
+    }
+
     @Provide
     private Arbitrary<Integer> inexistentElement() {
         return Arbitraries.oneOf(

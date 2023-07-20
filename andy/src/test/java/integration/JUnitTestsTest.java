@@ -178,6 +178,14 @@ public class JUnitTestsTest {
                     .has(failingTest("testNoElementInWholeArray"));
         }
 
+        @Test
+        void testBadAssumptionFilteringPropertyTest() {
+            Result result = run(Action.TESTS, "ArrayUtilsIndexOfLibrary", "ArrayUtilsIndexOfAssumptionJqwikError");
+
+            assertThat(result.getTests())
+                    .has(failingTest("testNoElementInWholeArray"));
+        }
+
 
         @Test
         void testMultiplePropertyTestsFailing() {
@@ -185,7 +193,8 @@ public class JUnitTestsTest {
 
             assertThat(result.getTests())
                     .has(failingTest("testNoElementInWholeArray"))
-                    .has(failingTest("testValueInArrayUniqueElements"));
+                    .has(failingTest("testValueInArrayUniqueElements"))
+                    .has(failingTest("testNoElementInWholeArrayWithAssumption"));
         }
 
 
